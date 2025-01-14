@@ -1,5 +1,8 @@
 #pragma once
 
+#include <Level.h>
+#include <World/export.h>
+
 namespace GameEngine::World
 {
 	class WorldParser final

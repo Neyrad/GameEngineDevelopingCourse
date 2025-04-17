@@ -6,9 +6,7 @@
 
 namespace GameEngine
 {
-	Game::Game(
-		std::function<bool()> PlatformLoopFunc
-	) :
+	Game::Game(std::function<bool()> PlatformLoopFunc) :
 		PlatformLoop(PlatformLoopFunc)
 	{
 		Core::g_MainCamera = new Core::Camera();
@@ -40,7 +38,6 @@ namespace GameEngine
 
 			m_renderThread->OnEndFrame();
 
-			// The most common idea for such a loop is that it returns false when quit is required, or true otherwise
 			quit = !PlatformLoop();
 		}
 	}

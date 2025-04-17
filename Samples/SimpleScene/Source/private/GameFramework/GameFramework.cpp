@@ -3,6 +3,7 @@
 #include <ecsControl.h>
 #include <ecsMesh.h>
 #include <ecsPhys.h>
+#include <ecsAudio.h>
 #include <ECS/ecsSystems.h>
 #include <GameFramework/GameFramework.h>
 #include <Input/Controller.h>
@@ -13,6 +14,9 @@ using namespace GameEngine;
 
 void GameFramework::Init()
 {
+	m_AudioManager = new Audio::AudioManager();
+	m_World.set(Audio::AudioManagerPtr{ m_AudioManager });
+
 	RegisterComponentsReflection();
 	RegisterSystems();
 
@@ -71,15 +75,34 @@ void GameFramework::RegisterComponentsReflection()
 
 	m_World.component<JumpSpeed>()
 		.member<float>("value");
+
+	m_World.component<TTL>()
+		.member<float>("value");
+
+	m_World.component<DieOnGround>()
+		.member<bool>("value");
+
+	m_World.component<Collider>()
+		.member<bool>("value");
+
+	m_World.component<JumpOnCollision>()
+		.member<bool>("value");
+
+	m_World.component<PlaySound>()
+		.member<bool>("loop");
+
+	m_World.component<SoundFilePath>()
+		.member<unsigned int>("id");
 }
 
 void GameFramework::RegisterSystems()
 {
 	RegisterEcsMeshSystems(m_World);
 	RegisterEcsControlSystems(m_World);
+	RegisterEcsAudioSystems(m_World);
 }
 
 void GameFramework::Update(float dt)
 {
-
+	m_AudioManager->Update(dt);
 }
